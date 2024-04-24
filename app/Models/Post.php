@@ -8,5 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable = ['title'];
+
+    # fill in guarded array with fields that cannot be mass created leave blank to allow all
+    protected $guarded = [];
+    #protected $fillable = ['id', 'title', 'category_id', 'excerpt', 'body'];
+
+
 }
