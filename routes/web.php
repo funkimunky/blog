@@ -7,13 +7,12 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Post as p;
 
 Route::get('/', function () {
-    \Illuminate\Support\Facades\DB::listen(function($query){
-        logger($query->sql, $query->bindings);
-    });
-
+//    \Illuminate\Support\Facades\DB::listen(function($query){
+//        logger($query->sql, $query->bindings);
+//    });
 
     return view('posts',[
-        'posts' => Post::all()
+        'posts' => Post::with('category')->get()
     ]);
 });
 
