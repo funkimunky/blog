@@ -16,39 +16,35 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $category = Category::factory()->create([
-            'name'=>'Family'
-        ]);
-        $user = User::factory()->create([
-            'username'=>'John Doe'
-        ]);
-        Post::factory(4)->create([
-            'user_id'=>$user->id,
-            'category_id'=>$category->id
-        ]);
-
-
-        $category = Category::factory()->create([
-            'name'=>'Work'
-        ]);
-        $user = User::factory()->create([
-            'username'=>'Jane Doe'
-        ]);
-        Post::factory(4)->create([
-            'user_id'=>$user->id,
-            'category_id'=>$category->id
-        ]);
-
-        $category = Category::factory()->create([
-            'name'=>'Hobbies'
-        ]);
-        $user = User::factory()->create([
-            'username'=>'Albus Dumbledore'
-        ]);
-        Post::factory(4)->create([
-            'user_id'=>$user->id,
-            'category_id'=>$category->id
-        ]);
-
+        $categories = [
+            [
+                'name'=>'Work',
+                'slug'=>'work'
+            ],
+            [
+                'name'=>'Family',
+                'slug'=>'family'
+            ],
+            [
+                'name'=>'Hobbies',
+                'slug'=>'hobbies'
+            ],
+        ];
+        $randomUser = rand(1,5);
+        for($i=0;$i<$randomUser;$i++)
+        {
+            $user = User::factory()->create();
+            foreach($categories as $item)
+            {
+                $category = Category::factory()->create([
+                    'name'=>$item['name'],
+                    'slug'=>$item['slug']
+                ]);
+                Post::factory(rand(1,3))->create([
+                    'user_id'=>$user->id,
+                    'category_id'=>$category->id
+                ]);
+            }
+        };
     }
 }
