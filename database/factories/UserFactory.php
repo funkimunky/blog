@@ -16,6 +16,13 @@ class UserFactory extends Factory
      */
     protected static ?string $password;
 
+    private function clean($string) {
+        $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+        $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+
+        return preg_replace('/-+/', '-', $string); // Replaces multiple hyphens with single one.
+    }
+
     /**
      * Define the model's default state.
      *
@@ -23,13 +30,16 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'username' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
-        ];
+        $user = [];
+
+        $user['name'] = fake()->name();
+        $user['username'] = $this->clean($user['name']);
+        $user['email'] = fake()->unique()->safeEmail();
+        $user['email_verified_at'] = now();
+        $user['password'] = static::$password ??= Hash::make('password');
+        $user['remember_token'] = Str::random(10);
+
+        return $user;
     }
 
     /**

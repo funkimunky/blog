@@ -8,13 +8,8 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Post as p;
 
 Route::get('/', function () {
-//    \Illuminate\Support\Facades\DB::listen(function($query){
-//        logger($query->sql, $query->bindings);
-//    });
-    $posts = Post::with('category','user')->get();
-
     return view('posts',[
-        'posts' => $posts
+        'posts' => Post::latest('published_at')
     ]);
 });
 
@@ -32,12 +27,10 @@ Route::get('/categories/{category:slug}', function (Category $category)
     ]);
 });
 
-Route::get('/authors/{user:name}', function (User $user)
+Route::get('/authors/{author:username}', function (User $author)
 {
-    $posts = $user->posts;
-
     return view('posts',[
-        'posts' => $user->posts
+        'posts' => $author->posts
     ]);
 });
 
