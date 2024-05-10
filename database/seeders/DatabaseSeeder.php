@@ -30,21 +30,34 @@ class DatabaseSeeder extends Seeder
                 'slug'=>'hobbies'
             ],
         ];
-        $randomUser = rand(1,5);
-        for($i=0;$i<$randomUser;$i++)
+        $NumRandUsers = rand(1,5);
+        $userArray = [];
+        for($i=0;$i<$NumRandUsers;$i++)
         {
-            $user = User::factory()->create();
-            foreach($categories as $item)
-            {
-                $category = Category::factory()->create([
-                    'name'=>$item['name'],
-                    'slug'=>$item['slug']
-                ]);
-                Post::factory(rand(1,3))->create([
-                    'user_id'=>$user->id,
-                    'category_id'=>$category->id
-                ]);
-            }
+            $userArray+=["user{$i}"=>User::factory()->create()];
         };
+
+        $catCounter = 1;
+        foreach($categories as $item)
+        {
+            $categoryName = "category{$catCounter}";
+            $catCounter ++;
+            $$categoryName = Category::factory()->create([
+                'name'=>$item['name'],
+                'slug'=>$item['slug']
+            ]);
+        }
+
+        for($i=0; $i<$NumRandUsers; $i++){
+            Post::factory()->create([
+                'user_id'=>$user->id,
+                'category_id'=>$category->id
+            ]);
+        }
+
+        Post::factory(rand(1,3))->create([
+            'user_id'=>$user->id,
+            'category_id'=>$category->id
+        ]);
     }
 }
