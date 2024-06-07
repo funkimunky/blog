@@ -11,7 +11,7 @@ Route::get('/', function () {
 //    \Illuminate\Support\Facades\DB::listen(function($query){
 //        logger($query->sql, $query->bindings);
 //    });
-    $posts = Post::with('category','user')->get();
+    $posts = Post::latest('updated_at')->with('category','author')->get();
 
     return view('posts',[
         'posts' => $posts
@@ -32,12 +32,12 @@ Route::get('/categories/{category:slug}', function (Category $category)
     ]);
 });
 
-Route::get('/authors/{user:name}', function (User $user)
+Route::get('/authors/{author:username}', function (User $author)
 {
-    $posts = $user->posts;
+    $posts = $author->posts;
 
     return view('posts',[
-        'posts' => $user->posts
+        'posts' => $posts
     ]);
 });
 
