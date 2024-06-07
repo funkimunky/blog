@@ -24,17 +24,7 @@ class DatabaseSeeder extends Seeder
             'user_id'=>$user->id
         ]);
 
-//
-//            $user = User::factory()->create([
-//                'username'=>'John Doe'
-//            ]);
 
-<<<<<<< HEAD
-//            Post::factory(5)->create([
-//                'user_id'=>$user->id
-//            ]);
-            Post::factory(5)->create();
-=======
         $user = User::factory()->create([
             'name'=>'Sarah McDonald'
         ]);
@@ -51,7 +41,6 @@ class DatabaseSeeder extends Seeder
         Post::factory(5)->create([
             'user_id'=>$user->id
         ]);
->>>>>>> fix-author-view
 
 
     }
