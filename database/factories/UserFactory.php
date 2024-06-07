@@ -30,6 +30,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+<<<<<<< HEAD
         $user = [];
 
         $user['name'] = fake()->name();
@@ -40,6 +41,16 @@ class UserFactory extends Factory
         $user['remember_token'] = Str::random(10);
 
         return $user;
+=======
+        return [
+            'name' => $this->faker->name(),
+            'username' => fake()->unique()->userName(),
+            'email' => fake()->unique()->safeEmail(),
+            'email_verified_at' => now(),
+            'password' => static::$password ??= Hash::make('password'),
+            'remember_token' => Str::random(10),
+        ];
+>>>>>>> fix-author-view
     }
 
     /**
