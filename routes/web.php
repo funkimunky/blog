@@ -10,7 +10,8 @@ use App\Models\Post as p;
 Route::get('/', function () {
     $posts = Post::latest('updated_at')->with('category','author')->get();
     return view('posts',[
-        'posts' => $posts
+        'posts' => $posts,
+        'categories'=> Category::all()
     ]);
 });
 
