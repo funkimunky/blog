@@ -35,10 +35,15 @@
                 </button>
 
                 <div x-show="show" class="py-2 absolute bg-gray-100 w-full mt-2 rounded-xl" style="display: none">
-                    <?php xdebug_break(); ?>
+
                     @foreach($categories as $category)
                         <a href="/categories/{{$category->slug}}"
-                           class="block text-left px-3 text-s leading-6 hover:bg-blue-500 focus:bg-blue-500 hover:text-white"
+                           class="
+                           block text-left px-3 text-s leading-6
+                           hover:bg-blue-500 focus:bg-blue-500 hover:text-white
+                           {{ isset($currentCategory) && $currentCategory->is($category) ? 'bg-blue-500 text-white' : '' }}
+                           "
+                        <?php //xdebug_break(); ?>
                         >{{ucwords($category->name)}}</a>
                     @endforeach
 
