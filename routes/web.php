@@ -10,7 +10,8 @@ use App\Models\Post as p;
 Route::get('/', function () {
     $posts = Post::latest('updated_at')->with('category','author')->get();
     return view('posts',[
-        'posts' => $posts
+        'posts' => $posts,
+        'categories'=> Category::all()
     ]);
 });
 
@@ -23,8 +24,14 @@ Route::get('/posts/{post:slug}', function (Post $post){
 
 Route::get('/categories/{category:slug}', function (Category $category)
 {
+    $posts = $category->posts;
+    $categoryPass = $category;
+    $catID = $category->id;
+
     return view('posts',[
-        'posts' => $category->posts
+        'posts' => $posts,
+        'categories'=> Category::all(),
+        'currentCategory' => $categoryPass
     ]);
 });
 
